@@ -27,13 +27,23 @@ async function runScheduler() {
         ]);
 
         const depots = depotsRes.data.depots;
-        const allVehicles = vehiclesRes.data.vehicles;
+        const rawVehicles = vehiclesRes.data.vehicles;
+
+        // CRITICAL FIX: Normalize vehicle data so scheduler can read it
+        const normalizedVehicles = rawVehicles.map((v: any) => ({
+            ...v,
+            // Ensure these keys exist for the knapsack logic
+            MaintenanceHours: v.MaintenanceHours || v.Duration || v.hours || 0,
+            ImpactScore: v.ImpactScore || v.Impact || v.score || 0
+        }));
 
         const results = depots.map((depot: any) => {
-            const schedule: any = getOptimizedSchedule(allVehicles, depot.MechanicHours);
+            const hours = depot.MechanicHours || depot.availableHours || 0;
+            const schedule: any = getOptimizedSchedule(normalizedVehicles, hours);
+            
             return {
-                DepotID: depot.ID,
-                Available: depot.MechanicHours,
+                DepotID: depot.ID || depot.id,
+                Available: hours,
                 Used: schedule.totalHoursSpent,
                 Score: schedule.totalImpactScore,
                 Count: schedule.selectedVehicles.length

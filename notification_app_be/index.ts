@@ -6,13 +6,7 @@ dotenv.config();
 
 const BASE_URL = 'http://20.207.122.201/evaluation-service';
 
-const PRIORITY_MAP: Record<string, number> = {
-    'Placement': 3,
-    'Result': 2,
-    'Event': 1
-};
-
-async function fetchPriorityNotifications() {
+async function runNotifications() {
     try {
         await Log("backend", "info", "notifications", "Fetching student notifications.");
 
@@ -26,24 +20,25 @@ async function fetchPriorityNotifications() {
         });
         const token = authRes.data.access_token;
 
-        const response = await axios.get(`${BASE_URL}/notifications`, {
+        const notifyRes = await axios.get(`${BASE_URL}/notifications`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
-        const notifications = response.data.notifications;
+        // Handle case where notifications might be inside a data property
+        const notifications = notifyRes.data.notifications || notifyRes.data;
 
-        const sortedNotifications = notifications.sort((a: any, b: any) => {
-            const priorityA = PRIORITY_MAP[a.notificationType] || 0;
-            const priorityB = PRIORITY_MAP[b.notificationType] || 0;
-            if (priorityA !== priorityB) return priorityB - priorityA;
-            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        const priorityMap: any = { "Placement": 1, "Results": 2, "Events": 3 };
+
+        const sorted = notifications.sort((a: any, b: any) => {
+            return (priorityMap[a.Category] || 4) - (priorityMap[b.Category] || 4);
         });
 
-        console.log("--- PRIORITY INBOX ---");
-        console.table(sortedNotifications.map((n: any) => ({
-            Type: n.notificationType,
-            Message: n.content.substring(0, 50) + "...",
-            Date: new Date(n.createdAt).toLocaleDateString()
+        console.log("\n--- PRIORITY INBOX ---");
+        console.table(sorted.map((n: any) => ({
+            Category: n.Category,
+            // Safe check for Content
+            Content: n.Content ? (n.Content.substring(0, 50) + "...") : "N/A",
+            Time: n.Timestamp || n.time
         })));
 
     } catch (error: any) {
@@ -51,4 +46,4 @@ async function fetchPriorityNotifications() {
     }
 }
 
-fetchPriorityNotifications();
+runNotifications();
