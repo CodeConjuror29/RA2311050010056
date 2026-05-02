@@ -1,0 +1,15 @@
+◇ injected env (5) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+[INFO] service: Starting Scheduler...
+
+--- OPTIMIZED MAINTENANCE SCHEDULES ---
+┌─────────┬─────────┬───────────┬──────┬───────┬───────┐
+│ (index) │ DepotID │ Available │ Used │ Score │ Count │
+├─────────┼─────────┼───────────┼──────┼───────┼───────┤
+│ 0       │ 1       │ 60        │ 60   │ 132   │ 16    │
+│ 1       │ 2       │ 135       │ 135  │ 210   │ 28    │
+│ 2       │ 3       │ 188       │ 188  │ 234   │ 36    │
+└─────────┴─────────┴───────────┴──────┴───────┴───────┘
+[INFO] service: Calculated optimal impact: 132
+[INFO] service: Calculated optimal impact: 210
+[INFO] service: Calculated optimal impact: 234

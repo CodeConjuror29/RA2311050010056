@@ -1,0 +1,29 @@
+◇ injected env (5) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+[LOCAL-ONLY] notifications: Fetching student notifications.
+
+--- PRIORITY INBOX ---
+┌─────────┬───────────┬─────────┬───────────────────────┐
+│ (index) │ Category  │ Content │ Time                  │
+├─────────┼───────────┼─────────┼───────────────────────┤
+│ 0       │ undefined │ 'N/A'   │ '2026-05-02 04:01:03' │
+│ 1       │ undefined │ 'N/A'   │ '2026-05-01 14:00:57' │
+│ 2       │ undefined │ 'N/A'   │ '2026-05-02 01:30:51' │
+│ 3       │ undefined │ 'N/A'   │ '2026-05-01 13:00:45' │
+│ 4       │ undefined │ 'N/A'   │ '2026-05-02 02:30:39' │
+│ 5       │ undefined │ 'N/A'   │ '2026-05-01 09:00:33' │
+│ 6       │ undefined │ 'N/A'   │ '2026-05-01 15:30:27' │
+│ 7       │ undefined │ 'N/A'   │ '2026-05-01 21:30:21' │
+│ 8       │ undefined │ 'N/A'   │ '2026-05-01 21:30:15' │
+│ 9       │ undefined │ 'N/A'   │ '2026-05-01 22:00:09' │
+│ 10      │ undefined │ 'N/A'   │ '2026-05-01 20:00:03' │
+│ 11      │ undefined │ 'N/A'   │ '2026-05-01 06:59:57' │
+│ 12      │ undefined │ 'N/A'   │ '2026-05-02 02:59:51' │
+│ 13      │ undefined │ 'N/A'   │ '2026-05-01 14:29:45' │
+│ 14      │ undefined │ 'N/A'   │ '2026-05-01 13:59:39' │
+│ 15      │ undefined │ 'N/A'   │ '2026-05-01 23:29:33' │
+│ 16      │ undefined │ 'N/A'   │ '2026-05-01 23:29:27' │
+│ 17      │ undefined │ 'N/A'   │ '2026-05-01 21:59:21' │
+│ 18      │ undefined │ 'N/A'   │ '2026-05-01 17:59:15' │
+│ 19      │ undefined │ 'N/A'   │ '2026-05-01 08:59:09' │
+└─────────┴───────────┴─────────┴───────────────────────┘
