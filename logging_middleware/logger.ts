@@ -27,13 +27,6 @@ async function getAuthToken() {
     }
 }
 
-/**
- * Sends a log entry to the evaluation server.
- * @param stack - "backend" or "frontend"
- * @param level - "info", "warn", or "error"
- * @param pkg - The component name (e.g., "scheduler", "notifications")
- * @param message - The log message
- */
 export async function Log(stack: "backend" | "frontend", level: string, pkg: string, message: string) {
     const token = await getAuthToken();
     try {
@@ -47,7 +40,6 @@ export async function Log(stack: "backend" | "frontend", level: string, pkg: str
                 headers: { Authorization: `Bearer ${token}` }
             });
         }
-        // Always log to console as well for your screenshots
         console.log(`[${level.toUpperCase()}] ${pkg}: ${message}`);
     } catch (err) {
         console.log(`[LOCAL-ONLY] ${pkg}: ${message}`);

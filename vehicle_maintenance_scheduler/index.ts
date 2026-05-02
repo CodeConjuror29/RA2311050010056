@@ -9,10 +9,9 @@ const BASE_URL = 'http://20.207.122.201/evaluation-service';
 
 async function runScheduler() {
     try {
-        await Log("backend", "info", "controller", "Starting Vehicle Maintenance Scheduler process.");
+        await Log("backend", "info", "service", "Starting Scheduler...");
 
-        const authRes = await axios.post(`${BASE_URL}/auth`, 
-        {
+        const authRes = await axios.post(`${BASE_URL}/auth`, {
             email: process.env.EMAIL,
             name: "Priyanka Sen",
             rollNo: process.env.ROLL_NO,
@@ -21,37 +20,31 @@ async function runScheduler() {
             clientSecret: process.env.CLIENT_SECRET
         });
         const token = authRes.data.access_token;
-        const headers = { Authorization: `Bearer ${token}` };
 
         const [depotsRes, vehiclesRes] = await Promise.all([
-            axios.get(`${BASE_URL}/depots`, { headers }),
-            axios.get(`${BASE_URL}/vehicles`, { headers })
+            axios.get(`${BASE_URL}/depots`, { headers: { Authorization: `Bearer ${token}` } }),
+            axios.get(`${BASE_URL}/vehicles`, { headers: { Authorization: `Bearer ${token}` } })
         ]);
 
         const depots = depotsRes.data.depots;
         const allVehicles = vehiclesRes.data.vehicles;
 
-        await Log("backend", "info", "service", `Fetched ${depots.length} depots and ${allVehicles.length} vehicles.`);
-
         const results = depots.map((depot: any) => {
-            const schedule = getOptimizedSchedule(allVehicles, depot.MechanicHours);
+            const schedule: any = getOptimizedSchedule(allVehicles, depot.MechanicHours);
             return {
-                depotId: depot.ID,
-                availableHours: depot.MechanicHours,
-                ...schedule
+                DepotID: depot.ID,
+                Available: depot.MechanicHours,
+                Used: schedule.totalHoursSpent,
+                Score: schedule.totalImpactScore,
+                Count: schedule.selectedVehicles.length
             };
         });
 
-        console.log("--- FINAL OPTIMIZED SCHEDULES ---");
-        console.dir(results, { depth: null });
-        
-        await Log("backend", "info", "handler", "Successfully calculated schedules for all depots.");
+        console.log("\n--- OPTIMIZED MAINTENANCE SCHEDULES ---");
+        console.table(results);
 
-    } 
-    catch (error: any) 
-    {
-        await Log("backend", "error", "handler", `Scheduler failed: ${error.message}`);
-        console.error(error);
+    } catch (error: any) {
+        console.error("Error:", error.message);
     }
 }
 

@@ -1,30 +1,26 @@
 {
   "name": "ra2311050010056",
   "version": "1.0.0",
-  "description": "Affordmed Campus Hiring Evaluation - Backend",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:scheduler": "ts-node vehicle_maintenance_scheduler/index.ts",
-    "start:notifications": "ts-node notification_app_be/index.ts"
+    "start:scheduler": "ts-node --transpile-only vehicle_maintenance_scheduler/index.ts",
+    "start:notifications": "ts-node --transpile-only notification_app_be/index.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeConjuror29/RA2311050010056.git"
-  },
-  "keywords": [],
-  "author": "Priyanka Sen",
-  "license": "ISC",
   "dependencies": {
-    "axios": "^1.15.2",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
   },
   "devDependencies": {
-    "@types/axios": "^0.9.36",
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.6.0",
+    "@types/node": "^20.11.0",
     "ts-node": "^10.9.2",
-    "typescript": "^6.0.3"
+    "typescript": "^5.3.3"
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node",
+      "ignoreDeprecations": "6.0",
+      "esModuleInterop": true
+    }
   }
 }
